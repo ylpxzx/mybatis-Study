@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 绑定对应的Dao/Mapper接口 -->
+<mapper namespace="com.xzx.dao.UserMapper">
+    <!-- id 对应的Dao/Mapper接口中需要重写的方法 -->
+    <select id="getUserList" resultType="com.xzx.pojo.User">
+    select * from mybatis_sql.user
+  </select>
+
+    <!-- 只有一个基本类型参数的情况下， parameterType可以不写 -->
+    <select id="getUserById" parameterType="int" resultType="com.xzx.pojo.User">
+        select * from mybatis_sql.user where id = #{id}
+    </select>
+
+    <!-- 通过读取map对象属性进行查询操作； 对象中的属性，可以直接取出来使用，不依赖于实体类中的固定字段 （推荐） -->
+    <select id="getUserIdByMap" parameterType="map" resultType="com.xzx.pojo.User">
+        select * from mybatis_sql.user where id = #{userid}
+    </select>
+
+    <insert id="addUser" parameterType="com.xzx.pojo.User">
+        insert into mybatis_sql.user (id, name, pwd) values (#{id}, #{name}, #{pwd});
+    </insert>
+
+    <!-- 通过读取map对象属性进行插入操作； 对象中的属性，可以直接取出来使用，不依赖于实体类中的固定字段 （推荐） -->
+    <insert id="addUserByMap" parameterType="map">
+        insert into mybatis_sql.user (id, name, pwd) values (#{userid}, #{username}, #{password});
+    </insert>
+
+    <update id="updateUser" parameterType="com.xzx.pojo.User">
+        update mybatis_sql.user set name = #{name}, pwd = #{pwd} where id = #{id};
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from mybatis_sql.user where id = #{id};
+    </delete>
+
+    <!-- %通配符在SQL查询语句中写死，避免被注入攻击 -->
+    <select id="getUserLike" resultType="com.xzx.pojo.User">
+        select * from mybatis_sql.user where name like "%"#{value}"%";
+    </select>
+</mapper>
+
+<!-- 编写完一个mapper后，记得在mybatis的核心配置文件mybatis-config.xml中进行配置 -->

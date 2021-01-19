@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--核心配置文件-->
+<configuration>
+
+    <!-- 引入外部配置文件； properties标签的放置位置很重要，放在其他位置会报错 -->
+<!--    <properties resource="db.properties" />-->
+
+    <!-- properties默认读取外部配置文件的数据，所以此处密码写错，配置文件写对时，不会报错 -->
+    <properties resource="db.properties">
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+    </properties>
+
+    <!-- 配置别名: 替换长路径 (不推荐使用，建议在java Bean上加@Alias注解, 即在pojo文件下的User加注解) -->
+<!--    <typeAliases>-->
+<!--        <typeAlias type="com.xzx.pojo.User" alias="User" />-->
+<!--    </typeAliases>-->
+
+    <!-- @Alias设置别名: 在java Bean上加@Alias注解, 即在pojo文件下的User加注解，之后需要在typeAliases中指定对应类 -->
+        <typeAliases>
+            <typeAlias type="com.xzx.pojo.User" />
+        </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 将编写后的mapper配置进来 -->
+    <mappers>
+        <mapper resource="UserMapper.xml"/>
+    </mappers>
+</configuration>

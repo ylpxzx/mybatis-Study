@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 绑定对应的Dao/Mapper接口 -->
+<mapper namespace="com.xzx.dao.UserMapper">
+
+    <!-- 只有一个基本类型参数的情况下， parameterType可以不写 -->
+<!--    <select id="getUserById" parameterType="int" resultType="hello">-->
+<!--        select * from mybatis_sql.user where id = #{id}-->
+<!--    </select>-->
+
+    <!-- 在属性名与数据库字段名不一致的情况下，返回的数据为null
+         如一个属性名为password，数据库表中的字段名为pwd
+         而该查询语句：select * from mybatis_sql.user where id = #{id}   ===>  select id, name, pwd from mybatis_sql.user where id = #{id}
+         类型处理器找不到查询回来的pwd对应的属性名，所以为null.
+     -->
+
+    <!-- 解决方法一：起别名， 将 select * from mybatis_sql.user where id = #{id}   ===>  select id, name, pwd as password from mybatis_sql.user where id = #{id} -->
+<!--    <select id="getUserById" parameterType="int" resultType="hello">-->
+<!--        select id, name, pwd as password from mybatis_sql.user where id = #{id}-->
+<!--    </select>-->
+
+    <!-- 解决方法二：使用ResultMap结果集处理 -->
+    <!-- type="hello"为上一步设置的别名，请勿被误导 -->
+    <resultMap id="UserMap" type="hello">
+        <!-- column是数据库中的字段，property是实体类中的属性 -->
+<!--        <result column="id" property="id" />-->
+<!--        <result column="name" property="name" />-->
+        <result column="pwd" property="password" />
+    </resultMap>
+    <select id="getUserById" resultMap="UserMap">
+        select * from mybatis_sql.user where id = #{id}
+    </select>
+</mapper>
+
+<!-- 编写完一个mapper后，记得在mybatis的核心配置文件mybatis-config.xml中进行配置 -->

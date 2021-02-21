@@ -19,19 +19,8 @@
         <setting name="logImpl" value="STDOUT_LOGGING"/>
 
 
-<!--        <setting name="logImpl" value="LOG4J"></setting>-->
+        <!--<setting name="logImpl" value="LOG4J"></setting>-->
     </settings>
-
-    <!-- 配置别名: 替换长路径 (不推荐使用，建议在java Bean上加@Alias注解, 即在pojo文件下的User加注解) -->
-<!--    <typeAliases>-->
-<!--        <typeAlias type="com.xzx.pojo.User" alias="User" />-->
-<!--    </typeAliases>-->
-
-    <!-- @Alias设置别名: 在java Bean上加@Alias注解, 即在pojo文件下的User加注解，之后需要在typeAliases中指定对应类 -->
-        <typeAliases>
-            <typeAlias type="com.xzx.pojo.User" />
-        </typeAliases>
-
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
@@ -43,22 +32,8 @@
             </dataSource>
         </environment>
     </environments>
-
-    <!-- 将编写后的mapper配置进来 -->
     <mappers>
-        <!-- 方式一：使用resource映射 -->
-        <!-- 使用xml文件绝对路径映射 -->
-<!--        <mapper resource="com/xzx/dao/UserMapper.xml" />-->
-        <!-- 使用静态路径映射 -->
-        <mapper resource="Mapper/UserMapper.xml"/>
-
-        <!-- 方式二：使用接口类名映射 (不推荐) -->
-        <!-- 要求1：接口和它的Mapper配置文件必须同名 -->
-        <!-- 要求2：接口和它的Mapper配置文件必须在同一个包下 -->
-<!--        <mapper class="com.xzx.dao.UserMapper" />-->
-
-        <!-- 方式三：使用包扫描映射 (不推荐) -->
-        <!-- 要求同方式二 -->
-<!--        <package name="com.xzx.dao"/>-->
+        <mapper class="com.xzx.dao.TeacherMapper" />
+        <mapper class="com.xzx.dao.StudentMapper" />
     </mappers>
 </configuration>
